@@ -1,26 +1,72 @@
 import CreateableReactSelect from "react-select/creatable";
-import { Link } from "react-router-dom";
-import { FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FormEvent, useRef, useState } from "react";
+import { NoteData, Tag } from "../types/types";
+import { v4 as uuidV4 } from "uuid";
 
-const NoteForm = () => {
-  const onSubmit = (e: FormEvent) => {
+export type NoteFormProps = {
+  onSubmit: (data: NoteData) => void;
+  onAddTag: (tag: Tag) => void;
+  availableTags: Tag[];
+};
+const NoteForm = ({ onSubmit, onAddTag, availableTags }: NoteFormProps) => {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const markDownRef = useRef<HTMLTextAreaElement>(null);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const navigate = useNavigate();
+
+  const handelSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    onSubmit({
+      title: titleRef.current!.value,
+      markdown: markDownRef.current!.value,
+      tags: selectedTags,
+    });
+    navigate("..");
   };
   return (
-    <form onSubmit={onSubmit}>
-      <div className="flex flex-col gap-4 mt-10 mx-auto p-5 lg:w-[70%]">
+    <form onSubmit={handelSubmit}>
+      <div className="from-container">
         <div className="title flex flex-col gap-3 mb-3 sm:flex-row md:gap-0 justify-between">
           <div className="from-wrapper ">
             <label className="label" htmlFor="">
               Title
             </label>
-            <input className="input " type="text" placeholder="title..." />
+            <input
+              className="input "
+              type="text"
+              placeholder="title..."
+              ref={titleRef}
+              required
+            />
           </div>
           <div className="from-wrapper ">
             <label className="label" htmlFor="">
               Tages
             </label>
-            <CreateableReactSelect isMulti className="w-[250px]" />
+            <CreateableReactSelect
+              value={selectedTags.map((tag) => {
+                return { label: tag.label, value: tag.id };
+              })}
+              onCreateOption={(label) => {
+                const newTag = { id: uuidV4(), label };
+                onAddTag(newTag);
+                setSelectedTags((prev) => [...prev, newTag]);
+              }}
+              options={availableTags.map((tag) => {
+                return { label: tag.label, value: tag.id };
+              })}
+              onChange={(tags) => {
+                setSelectedTags(
+                  tags.map((tag) => {
+                    return { label: tag.label, id: tag.value };
+                  })
+                );
+              }}
+              isMulti
+              className="w-[250px]"
+            />
           </div>
         </div>
         <div className="from-wrapper ">
@@ -33,20 +79,16 @@ const NoteForm = () => {
             id=""
             rows={10}
             placeholder="Type something..."
+            ref={markDownRef}
+            required
           ></textarea>
         </div>
-        <div className="flex flex-row gap-5 justify-end mt-2 ">
-          <button
-            className="  border border-blue-500 bg-blue-500 hover:bg-blue-700 duration-300 text-white py-2 w-[75px] rounded-md"
-            type="submit"
-          >
+        <div className="btn-wrapper ">
+          <button className="blue-btn" type="submit">
             Save
           </button>
           <Link to="..">
-            <button
-              className="border border-gray-500 py-2 w-[75px] rounded-md hover:bg-gray-500 hover:text-white duration-300"
-              type="button"
-            >
+            <button className="gray-btn" type="button">
               Cancel
             </button>
           </Link>

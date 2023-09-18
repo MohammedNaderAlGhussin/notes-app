@@ -8,6 +8,16 @@ export type Tag = {
 };
 export type NoteData = {
   title: string;
-  body: string;
+  markdown: string;
   tags: Tag[];
+};
+
+//similar to the NoteData type but instead of storing the tags we will store the id of the tags
+export type RawNote = {
+  id: string;
+} & RawNoteData ;
+export type RawNoteData = {
+  title: string;
+  markdown: string;
+  tagIds: string[];
 };

@@ -28,6 +28,18 @@ body {
   .input {
     @apply w-[250px] border border-[#ccc] rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500;
   }
+  .btn-wrapper {
+    @apply flex flex-row gap-5 justify-end mt-2;
+  }
+  .blue-btn {
+    @apply border border-blue-500 bg-blue-500 hover:bg-blue-700 duration-300 text-white py-2 w-[75px] rounded-md;
+  }
+  .gray-btn {
+    @apply border border-gray-500 py-2 w-[75px] rounded-md hover:bg-gray-500 hover:text-white duration-300;
+  }
+  .from-container {
+    @apply flex flex-col gap-4 mt-10 mx-auto p-5 lg:w-[70%];
+  }
 }
 @layer utilities {
   input:focus::placeholder,
