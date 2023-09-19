@@ -27,9 +27,9 @@ const ShowNote = ({ onDeleteNote }: ShowNoteProps) => {
             </div>
           )}
         </div>
-        <div className="btn-wrapper ">
+        <div className="btn-wrapper  ">
           <Link to={`/${note.id}/edit`}>
-            <button className="blue-btn" type="button">
+            <button className="blue-btn btn" type="button">
               Edit
             </button>
           </Link>
@@ -38,19 +38,20 @@ const ShowNote = ({ onDeleteNote }: ShowNoteProps) => {
             onClick={() => {
               onDeleteNote(note.id);
             }}
-            className="red-btn"
+            className="red-btn btn"
             type="button"
           >
             Delete
           </button>
           <Link to="..">
-            <button className="gray-btn w-[80px]" type="button">
+            <button className="gray-btn btn" type="button">
               Back
             </button>
           </Link>
         </div>
       </div>
-      <ReactMarkdown>{note.markdown}</ReactMarkdown>
+      <hr />
+      <ReactMarkdown className="mt-3">{note.markdown}</ReactMarkdown>
     </>
   );
 };
