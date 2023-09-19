@@ -1,20 +1,27 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactSelect from "react-select";
-import { Tag } from "../types/types";
+import { Tag, simplifiedNote } from "../types/types";
+import NoteCard from "../components/NoteCard";
+import EditTagsModal from "../components/EditTagsModal";
 
-type simplifiedNote = {
-  id: string;
-  title: string;
-  tags: Tag[];
-};
+
 type NoteListProps = {
   availableTags: Tag[];
   notes: simplifiedNote[];
+  onUpdateTag: (id: string, label: string) => void;
+  onDeleteTag: (id: string) => void;
 };
-const NoteList = ({ availableTags, notes }: NoteListProps) => {
+
+const NoteList = ({
+  availableTags,
+  notes,
+  onDeleteTag,
+  onUpdateTag,
+}: NoteListProps) => {
   const [title, setTitle] = useState("");
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
       return (
@@ -38,7 +45,11 @@ const NoteList = ({ availableTags, notes }: NoteListProps) => {
               Create
             </button>
           </Link>
-          <button className="gray-btn w-[80px]" type="button">
+          <button
+            className="gray-btn w-[80px]"
+            type="button"
+            onClick={() => setShowModal(true)}
+          >
             Edit Tags
           </button>
         </div>
@@ -92,28 +103,17 @@ const NoteList = ({ availableTags, notes }: NoteListProps) => {
           );
         })}
       </div>
+      {showModal && (
+        <EditTagsModal
+          show={showModal}
+          handelClose={() => setShowModal(false)}
+          avavailableTags={availableTags}
+          onUpdateTag={onUpdateTag}
+          onDeleteTag={onDeleteTag}
+        />
+      )}
     </div>
   );
 };
 
 export default NoteList;
-
-const NoteCard = ({ id, title, tags }: simplifiedNote) => {
-  return (
-    <Link to={`/${id}`}>
-      <div className="flex flex-col gap-3 justify-center items-center min-h-[100px] p-4 rounded-md border-[1px] border-[#ccc] shadow-md hover:shadow-xl duration-300 hover:translate-y-[-5px] ">
-        <h1 className="text-lg">{title}</h1>
-        <div className="tags-wrapper flex flex-row gap-2 flex-wrap justify-center items-center">
-          {tags.map((tag) => (
-            <div
-              key={tag.id}
-              className="bg-blue-500 text-white rounded-md w-fit px-2 text-center"
-            >
-              {tag.label}
-            </div>
-          ))}
-        </div>
-      </div>
-    </Link>
-  );
-};

@@ -3,9 +3,9 @@ import { useNote } from "../components/NoteLayout";
 import ReactMarkdown from "react-markdown";
 
 type ShowNoteProps = {
-  onDelete: (id: string) => void;
+  onDeleteNote: (id: string) => void;
 };
-const ShowNote = ({ onDelete }: ShowNoteProps) => {
+const ShowNote = ({ onDeleteNote }: ShowNoteProps) => {
   const note = useNote();
   const navigate = useNavigate();
   return (
@@ -37,7 +37,7 @@ const ShowNote = ({ onDelete }: ShowNoteProps) => {
 
           <button
             onClick={() => {
-              onDelete(note.id);
+              onDeleteNote(note.id);
               navigate("/");
             }}
             className="red-btn"
@@ -47,7 +47,7 @@ const ShowNote = ({ onDelete }: ShowNoteProps) => {
           </button>
           <Link to="..">
             <button className="gray-btn w-[80px]" type="button">
-              Edit Tags
+              Back
             </button>
           </Link>
         </div>

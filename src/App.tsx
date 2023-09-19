@@ -43,15 +43,36 @@ function App() {
       return prevNotes.filter((note) => note.id !== id);
     });
   };
+
   const addTag = (tag: Tag) => {
     setTags((prev) => [...prev, tag]);
+  };
+
+  const onUpdateTag = (id: string, label: string) => {
+    setTags((prevTags) => {
+      return prevTags.map((tag) => {
+        if (tag.id === id) {
+          return { ...tag, label };
+        } else {
+          return tag;
+        }
+      });
+    });
+  };
+
+  const onDeleteTag = (id: string) => {
+    setTags((prevTags) => {
+      return prevTags.filter((tag) => tag.id !== id);
+    });
   };
   return (
     <div className="">
       <AppRoutes
         onSubmit={onCreateNote}
-        onUpdate={onUpdateNote}
-        onDelete={onDeleteNote}
+        onUpdateNote={onUpdateNote}
+        onDeleteNote={onDeleteNote}
+        onUpdateTag={onUpdateTag}
+        onDeleteTag={onDeleteTag}
         onAddTag={addTag}
         availableTags={tags}
         notesWithTags={notesWithTags}

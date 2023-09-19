@@ -8,8 +8,10 @@ import EditNote from "../pages/EditNote";
 
 type AppRoutesProps = {
   onSubmit: (data: NoteData) => void;
-  onUpdate: (id: string, data: NoteData) => void;
-  onDelete: (id: string) => void;
+  onUpdateNote: (id: string, data: NoteData) => void;
+  onDeleteNote: (id: string) => void;
+  onUpdateTag: (id: string, label: string) => void;
+  onDeleteTag: (id: string) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
   notesWithTags: Note[];
@@ -17,10 +19,12 @@ type AppRoutesProps = {
 const AppRoutes = ({
   onSubmit,
   onAddTag,
-  onDelete,
+  onDeleteNote,
+  onUpdateTag,
+  onDeleteTag,
   availableTags,
   notesWithTags,
-  onUpdate,
+  onUpdateNote,
 }: AppRoutesProps) => {
   return (
     <div className="container xl:max-w-[1250px] py-5 px-6 mx-auto">
@@ -28,7 +32,12 @@ const AppRoutes = ({
         <Route
           path="/"
           element={
-            <NoteList notes={notesWithTags} availableTags={availableTags} />
+            <NoteList
+              notes={notesWithTags}
+              availableTags={availableTags}
+              onUpdateTag={onUpdateTag}
+              onDeleteTag={onDeleteTag}
+            />
           }
         />
         <Route
@@ -42,12 +51,12 @@ const AppRoutes = ({
           }
         />
         <Route path="/:id" element={<NoteLayout notes={notesWithTags} />}>
-          <Route index element={<ShowNote onDelete={onDelete} />} />
+          <Route index element={<ShowNote onDeleteNote={onDeleteNote} />} />
           <Route
             path="edit"
             element={
               <EditNote
-                onSubmit={onUpdate}
+                onSubmit={onUpdateNote}
                 onAddTag={onAddTag}
                 availableTags={availableTags}
               />

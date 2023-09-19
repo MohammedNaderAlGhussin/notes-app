@@ -20,4 +20,5 @@ const NoteLayout = ({ notes }: NoteLayoutProps) => {
 
 export default NoteLayout;
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useNote = () => useOutletContext<Note>();
