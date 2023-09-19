@@ -4,7 +4,7 @@ import { simplifiedNote } from "../types/types";
 const NoteCard = ({ id, title, tags }: simplifiedNote) => {
   return (
     <Link to={`/${id}`}>
-      <div className="flex flex-col gap-3 justify-center items-center min-h-[100px] p-4 rounded-md border-[1px] border-[#ccc] shadow-md hover:shadow-xl duration-300 hover:translate-y-[-5px] ">
+      <div className="flex flex-col gap-3 relative justify-center items-center min-h-[120px] p-4 rounded-md border-[1px] border-[#ccc] shadow-md hover:shadow-xl duration-300 hover:translate-y-[-5px] ">
         <h1 className="text-lg">{title}</h1>
         <div className="tags-wrapper flex flex-row gap-2 flex-wrap justify-center items-center">
           {tags.map((tag) => (

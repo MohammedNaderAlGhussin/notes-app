@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNote } from "../components/NoteLayout";
 import ReactMarkdown from "react-markdown";
 
@@ -7,7 +7,6 @@ type ShowNoteProps = {
 };
 const ShowNote = ({ onDeleteNote }: ShowNoteProps) => {
   const note = useNote();
-  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-row justify-between items-center mb-5">
@@ -38,7 +37,6 @@ const ShowNote = ({ onDeleteNote }: ShowNoteProps) => {
           <button
             onClick={() => {
               onDeleteNote(note.id);
-              navigate("/");
             }}
             className="red-btn"
             type="button"

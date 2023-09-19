@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useRef, useState } from "react";
 import { NoteData, Tag } from "../types/types";
 import { v4 as uuidV4 } from "uuid";
+import Swal from "sweetalert2";
 
 export type NoteFormProps = {
   onSubmit: (data: NoteData) => void;
@@ -32,8 +33,27 @@ const NoteForm = ({
       tags: selectedTags,
     });
 
+    isFormDiabled();
     navigate("..");
   };
+  const isFormDiabled = () => {
+    if (titleRef.current?.value == "" || markDownRef.current?.value == "") {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    } else {
+      return Swal.fire({
+        icon: "success",
+        title: "Success...",
+        text: "Note Added",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    }
+  };
+
   return (
     <form onSubmit={handelSubmit}>
       <div className="from-container">

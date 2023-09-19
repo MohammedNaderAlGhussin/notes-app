@@ -3,10 +3,13 @@ import { useMemo } from "react";
 import AppRoutes from "./routes/AppRoutes";
 import { NoteData, RawNote, Tag } from "./types/types";
 import { v4 as uuidV4 } from "uuid";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
+  const navigate = useNavigate();
 
   const notesWithTags = useMemo(() => {
     return notes.map((note) => {
@@ -39,8 +42,22 @@ function App() {
   };
 
   const onDeleteNote = (id: string) => {
-    setNotes((prevNotes) => {
-      return prevNotes.filter((note) => note.id !== id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        setNotes((prevNotes) => {
+          return prevNotes.filter((note) => note.id !== id);
+        });
+        navigate("/");
+      }
     });
   };
 
@@ -64,6 +81,7 @@ function App() {
     setTags((prevTags) => {
       return prevTags.filter((tag) => tag.id !== id);
     });
+    Swal.fire("Deleted!", "Your file has been deleted.", "success");
   };
   return (
     <div className="">
