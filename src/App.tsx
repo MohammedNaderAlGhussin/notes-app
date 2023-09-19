@@ -26,6 +26,23 @@ function App() {
     });
   };
 
+  const onUpdateNote = (id: string, { tags, ...data }: NoteData) => {
+    setNotes((prevNotes) => {
+      return prevNotes.map((note) => {
+        if (note.id === id) {
+          return { ...note, ...data, tagIds: tags.map((tag) => tag.id) };
+        } else {
+          return note;
+        }
+      });
+    });
+  };
+
+  const onDeleteNote = (id: string) => {
+    setNotes((prevNotes) => {
+      return prevNotes.filter((note) => note.id !== id);
+    });
+  };
   const addTag = (tag: Tag) => {
     setTags((prev) => [...prev, tag]);
   };
@@ -33,6 +50,8 @@ function App() {
     <div className="">
       <AppRoutes
         onSubmit={onCreateNote}
+        onUpdate={onUpdateNote}
+        onDelete={onDeleteNote}
         onAddTag={addTag}
         availableTags={tags}
         notesWithTags={notesWithTags}

@@ -1,10 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import NewNote from "../pages/NewNote";
 import { Note, NoteData, Tag } from "../types/types";
-import NoteList from "../components/NoteList";
+import NoteList from "../pages/NoteList";
+import NoteLayout from "../components/NoteLayout";
+import ShowNote from "../pages/ShowNote";
+import EditNote from "../pages/EditNote";
 
 type AppRoutesProps = {
   onSubmit: (data: NoteData) => void;
+  onUpdate: (id: string, data: NoteData) => void;
+  onDelete: (id: string) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
   notesWithTags: Note[];
@@ -12,8 +17,10 @@ type AppRoutesProps = {
 const AppRoutes = ({
   onSubmit,
   onAddTag,
+  onDelete,
   availableTags,
   notesWithTags,
+  onUpdate,
 }: AppRoutesProps) => {
   return (
     <div className="container xl:max-w-[1250px] py-5 px-6 mx-auto">
@@ -34,9 +41,18 @@ const AppRoutes = ({
             />
           }
         />
-        <Route path="/:id">
-          <Route index element={<h1>Show</h1>} />
-          <Route path="edit" element={<h1>Edit</h1>} />
+        <Route path="/:id" element={<NoteLayout notes={notesWithTags} />}>
+          <Route index element={<ShowNote onDelete={onDelete} />} />
+          <Route
+            path="edit"
+            element={
+              <EditNote
+                onSubmit={onUpdate}
+                onAddTag={onAddTag}
+                availableTags={availableTags}
+              />
+            }
+          />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

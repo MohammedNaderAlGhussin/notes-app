@@ -8,11 +8,19 @@ export type NoteFormProps = {
   onSubmit: (data: NoteData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
-};
-const NoteForm = ({ onSubmit, onAddTag, availableTags }: NoteFormProps) => {
+} & Partial<NoteData>;
+
+const NoteForm = ({
+  onSubmit,
+  onAddTag,
+  availableTags,
+  title = "",
+  markdown = "",
+  tags = [],
+}: NoteFormProps) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const markDownRef = useRef<HTMLTextAreaElement>(null);
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
   const navigate = useNavigate();
 
   const handelSubmit = (e: FormEvent) => {
@@ -23,6 +31,7 @@ const NoteForm = ({ onSubmit, onAddTag, availableTags }: NoteFormProps) => {
       markdown: markDownRef.current!.value,
       tags: selectedTags,
     });
+
     navigate("..");
   };
   return (
@@ -39,6 +48,7 @@ const NoteForm = ({ onSubmit, onAddTag, availableTags }: NoteFormProps) => {
               placeholder="title..."
               ref={titleRef}
               required
+              defaultValue={title}
             />
           </div>
           <div className="from-wrapper ">
@@ -81,6 +91,7 @@ const NoteForm = ({ onSubmit, onAddTag, availableTags }: NoteFormProps) => {
             placeholder="Type something..."
             ref={markDownRef}
             required
+            defaultValue={markdown}
           ></textarea>
         </div>
         <div className="btn-wrapper ">
