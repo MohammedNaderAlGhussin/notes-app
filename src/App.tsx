@@ -8,7 +8,7 @@ function App() {
   const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
 
-  const notesWithTage = useMemo(() => {
+  const notesWithTags = useMemo(() => {
     return notes.map((note) => {
       return {
         ...note,
@@ -35,6 +35,7 @@ function App() {
         onSubmit={onCreateNote}
         onAddTag={addTag}
         availableTags={tags}
+        notesWithTags={notesWithTags}
       />
     </div>
   );

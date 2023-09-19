@@ -48,3 +48,23 @@ body {
     transition: 0.3s;
   }
 }
+@layer utilities {
+  /* width */
+  ::-webkit-scrollbar,
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    /* border-radius: 100vh; */
+    background: #fff;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #2196f3;
+    border: 2px solid #fff;
+  }
+}
