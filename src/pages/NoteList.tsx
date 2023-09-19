@@ -5,7 +5,6 @@ import { Tag, simplifiedNote } from "../types/types";
 import NoteCard from "../components/NoteCard";
 import EditTagsModal from "../components/EditTagsModal";
 
-
 type NoteListProps = {
   availableTags: Tag[];
   notes: simplifiedNote[];
@@ -41,12 +40,12 @@ const NoteList = ({
         <h1 className="font-bold text-2xl">Notes</h1>
         <div className="btn-wrapper ">
           <Link to="/new">
-            <button className="blue-btn" type="button">
+            <button className="blue-btn btn" type="button">
               Create
             </button>
           </Link>
           <button
-            className="gray-btn w-[80px]"
+            className="gray-btn btn w-[80px]"
             type="button"
             onClick={() => setShowModal(true)}
           >

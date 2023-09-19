@@ -115,11 +115,11 @@ const NoteForm = ({
           ></textarea>
         </div>
         <div className="btn-wrapper ">
-          <button className="blue-btn" type="submit">
+          <button className="blue-btn btn" type="submit">
             Save
           </button>
           <Link to="..">
-            <button className="gray-btn" type="button">
+            <button className="gray-btn btn w-[80px]" type="button">
               Cancel
             </button>
           </Link>

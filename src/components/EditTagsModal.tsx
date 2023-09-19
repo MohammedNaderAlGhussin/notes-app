@@ -10,7 +10,7 @@ const EditTagsModal = ({
   return (
     show && (
       <div className="fixed top-0 left-0 w-full h-full bg-[#00000045] z-50">
-        <div className="relative bg-white rounded-lg shadow w-[600px] mx-auto  mt-5 ">
+        <div className="relative bg-white rounded-lg shadow w-[320px] sm:w-[600px] mx-auto  mt-5 ">
           <div className="flex items-start justify-between p-4 border-b rounded-t ">
             <h3 className="text-xl font-semibold text-gray-900 ">
               Terms of Service
